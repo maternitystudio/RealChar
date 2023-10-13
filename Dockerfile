@@ -13,10 +13,8 @@ RUN apt-get update && apt-get install -y \
     libx264-dev \
     libopus-dev
 
-RUN echo "deb http://deb.debian.org/debian/ bullseye main\ndeb-src http://deb.debian.org/debian/ bullseye main" | tee /etc/apt/sources.list.d/ffmpeg.list  &&\
-    apt-get update && \
-    apt-get install -y ffmpeg=7:4.3.5-0+deb11u1
-
+# Install FFmpeg from the default repository (available versions for Bullseye)
+RUN apt-get install -y ffmpeg
 
 WORKDIR /realtime_ai_character
 
@@ -27,7 +25,7 @@ RUN pip install -r /realtime_ai_character/requirements.txt
 # Copy the project files
 COPY ./ /realtime_ai_character
 
-# Expose 8000 port from the docker image.
+# Expose 8000 port from the docker image
 EXPOSE 8000
 
 # Make the entrypoint script executable
